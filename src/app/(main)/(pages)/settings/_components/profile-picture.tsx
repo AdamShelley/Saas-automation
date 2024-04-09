@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import UploadCareButton from "./upload-care-button";
 import { useRouter } from "next/navigation";
@@ -29,12 +31,15 @@ const ProfilePicture = ({ onDelete, onUpload, userImage }: Props) => {
             <div className="relative h-full w-2/12">
               <Image src={userImage} alt="user_image" fill />
             </div>
-            <Button onClick={onRemoveProfileImage} className="bg-transparent text-white/70 hover:bg-transparent hover:text-white">
-                <X /> Remove Picture
+            <Button
+              onClick={onRemoveProfileImage}
+              className="bg-transparent text-white/70 hover:bg-transparent hover:text-white"
+            >
+              <X /> Remove Picture
             </Button>
           </>
         ) : (
-          <UploadCareButton />
+          <UploadCareButton onUpload={onUpload} />
         )}
       </div>
     </div>
