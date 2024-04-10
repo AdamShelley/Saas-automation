@@ -1,21 +1,22 @@
-import React from 'react'
-import Sidebar from '@/components/sidebar'
-import InfoBar from '@/components/infobar'
+import React from "react";
+import Sidebar from "@/components/sidebar";
+import InfoBar from "@/components/infobar";
+import ModalProvider from "@/providers/modal-provider";
 
 type Props = {
-    children: React.ReactNode
-}
+  children: React.ReactNode;
+};
 
-const Layout = ({children}: Props) => {
+const Layout = ({ children }: Props) => {
   return (
     <div className="flex overflow-hidden h-screen">
-        <Sidebar />
-        <div className="w-full">
-            <InfoBar/>
-            {children}
-        </div>
+      <Sidebar />
+      <div className="w-full">
+        <InfoBar />
+        <ModalProvider>{children}</ModalProvider>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Layout
+export default Layout;
