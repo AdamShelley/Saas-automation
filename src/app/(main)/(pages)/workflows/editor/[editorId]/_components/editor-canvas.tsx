@@ -1,7 +1,7 @@
 "use client";
 
 import { EditorCanvasCardType, EditorNodeType } from "@/lib/types";
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useEditor } from "@/providers/editor-provider";
 import ReactFlow, {
   Edge,
@@ -133,6 +133,10 @@ const EditorCanvas = (props: Props) => {
     (params: Edge | Connection) => setEdges((eds) => addEdge(params, eds)),
     []
   );
+
+  useEffect(() => {
+    dispatch({ type: "LOAD_DATA", payload: { edges, elements: nodes } });
+  }, [nodes, edges]);
 
   const handleClickCanvas = () => {
     dispatch({

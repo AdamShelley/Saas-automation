@@ -6,7 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import React from "react";
 import { Separator } from "@radix-ui/react-separator";
-import { EditorCanvasDefaultCardTypes } from "@/lib/constants";
+import { CONNECTIONS, EditorCanvasDefaultCardTypes } from "@/lib/constants";
 import {
   Card,
   CardDescription,
@@ -15,6 +15,13 @@ import {
 } from "@/components/ui/card";
 import EditorCanvasIconHelper from "./editor-canvas-card-icon-helper";
 import { onDragStart } from "@/lib/editor-utils";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import RenderConnectionAccordion from "./render-connections-accordion";
 
 type Props = {
   nodes: EditorNodeType[];
@@ -57,6 +64,27 @@ const EditorCanvasSidebar = ({ nodes }: Props) => {
                 </CardHeader>
               </Card>
             ))}
+        </TabsContent>
+        <TabsContent value="settings" className="-mt-6">
+          <div className="px-2 py-4 text-center text-xl font-bold">
+            {state.editor.selectedNode.data.title}
+          </div>
+          <Accordion type="multiple">
+            <AccordionItem value="Options" className="border-y-[1px] px-2">
+              <AccordionTrigger className="!no-underline">
+                Account
+              </AccordionTrigger>
+              <AccordionContent>
+                {CONNECTIONS.map((connection) => (
+                  <RenderConnectionAccordion
+                    key={connection.title}
+                    state={state}
+                    connection={connection}
+                  />
+                ))}
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </TabsContent>
       </Tabs>
     </aside>
