@@ -1,27 +1,37 @@
 "use client";
 import { EditorCanvasTypes, EditorNodeType } from "@/lib/types";
-import { useNodeConnections } from "@/providers/connections.provider";
+import { useNodeConnections } from "@/providers/connections-provider";
 import { useEditor } from "@/providers/editor-provider";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-import React from "react";
-import { Separator } from "@radix-ui/react-separator";
+import React, { useEffect } from "react";
+import { Separator } from "@/components/ui/separator";
 import { CONNECTIONS, EditorCanvasDefaultCardTypes } from "@/lib/constants";
+
 import {
   Card,
   CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import EditorCanvasIconHelper from "./editor-canvas-card-icon-helper";
-import { onDragStart } from "@/lib/editor-utils";
+import {
+  //   fetchBotSlackChannels,
+  //   onConnections,
+  onDragStart,
+} from "@/lib/editor-utils";
+// import EditorCanvasIconHelper from './editor-canvas-card-icon-hepler'
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+// import RenderConnectionAccordion from './render-connection-accordion'
+// import RenderOutputAccordion from './render-output-accordian'
+import { useFuzzieStore } from "@/store";
+import EditorCanvasIconHelper from "./editor-canvas-card-icon-helper";
 import RenderConnectionAccordion from "./render-connections-accordion";
+import RenderOutputAccordion from "./render-output-accordion";
 
 type Props = {
   nodes: EditorNodeType[];
@@ -30,13 +40,29 @@ type Props = {
 const EditorCanvasSidebar = ({ nodes }: Props) => {
   const { state } = useEditor();
   const { nodeConnection } = useNodeConnections();
+  const { googleFile, setSlackChannels } = useFuzzieStore();
+
+  // useEffect(() => {
+  //   if (state) {
+  //     onConnections(nodeConnection, state, googleFile);
+  //   }
+  // }, [state]);
+
+  // useEffect(() => {
+  //   if (nodeConnection.slackNode.slackAccessToken) {
+  //     fetchBotSlackChannels(
+  //       nodeConnection.slackNode.slackAccessToken,
+  //       setSlackChannels
+  //     );
+  //   }
+  // }, [nodeConnection]);
 
   return (
     <aside>
       <Tabs defaultValue="actions" className="h-screen overflow-scroll pb-24">
         <TabsList className="bg-transparent">
           <TabsTrigger value="actions">Actions</TabsTrigger>
-          <TabsTrigger value="triggers">Settings</TabsTrigger>
+          <TabsTrigger value="settings">Settings</TabsTrigger>
         </TabsList>
         <Separator />
         <TabsContent value="actions" className="flex flex-col gap-4 p-4">
@@ -69,6 +95,7 @@ const EditorCanvasSidebar = ({ nodes }: Props) => {
           <div className="px-2 py-4 text-center text-xl font-bold">
             {state.editor.selectedNode.data.title}
           </div>
+
           <Accordion type="multiple">
             <AccordionItem value="Options" className="border-y-[1px] px-2">
               <AccordionTrigger className="!no-underline">
@@ -83,6 +110,15 @@ const EditorCanvasSidebar = ({ nodes }: Props) => {
                   />
                 ))}
               </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="Expected Output" className="px-2">
+              <AccordionTrigger className="!no-underline">
+                Action
+              </AccordionTrigger>
+              <RenderOutputAccordion
+                state={state}
+                nodeConnection={nodeConnection}
+              />
             </AccordionItem>
           </Accordion>
         </TabsContent>

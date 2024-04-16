@@ -4,7 +4,7 @@ import ConnectionCard from "@/app/(main)/(pages)/connections/_components/connect
 import { AccordionContent } from "@/components/ui/accordion";
 import MultipleSelector from "@/components/ui/multiple-selector";
 import { Connection } from "@/lib/types";
-import { useNodeConnections } from "@/providers/connections.provider";
+import { useNodeConnections } from "@/providers/connections-provider";
 import { EditorState } from "@/providers/editor-provider";
 import { useFuzzieStore } from "@/store";
 import React from "react";

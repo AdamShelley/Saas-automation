@@ -1,4 +1,4 @@
-import { ConnectionProviderProps } from "@/providers/connections.provider";
+import { ConnectionProviderProps } from "@/providers/connections-provider";
 import { z } from "zod";
 
 export const EditUserProfileSchema = z.object({
@@ -83,3 +83,10 @@ export type EditorActions =
         element: EditorNode;
       };
     };
+
+export const nodeMapper: Record<string, string> = {
+  Notion: "notionNOde",
+  Slack: "slackNode",
+  Discord: "discordNode",
+  "Google Drive": "googleNode",
+};

@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useNodeConnections } from "@/providers/connections.provider";
+import { useNodeConnections } from "@/providers/connections-provider";
 import { usePathname } from "next/navigation";
 import React, { useCallback } from "react";
 import { toast } from "sonner";
