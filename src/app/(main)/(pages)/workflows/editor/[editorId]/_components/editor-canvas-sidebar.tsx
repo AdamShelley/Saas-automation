@@ -15,6 +15,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
+  fetchBotSlackChannels,
+  onConnections,
   //   fetchBotSlackChannels,
   //   onConnections,
   onDragStart,
@@ -42,20 +44,20 @@ const EditorCanvasSidebar = ({ nodes }: Props) => {
   const { nodeConnection } = useNodeConnections();
   const { googleFile, setSlackChannels } = useFuzzieStore();
 
-  // useEffect(() => {
-  //   if (state) {
-  //     onConnections(nodeConnection, state, googleFile);
-  //   }
-  // }, [state]);
+  useEffect(() => {
+    if (state) {
+      onConnections(nodeConnection, state, googleFile);
+    }
+  }, [state]);
 
-  // useEffect(() => {
-  //   if (nodeConnection.slackNode.slackAccessToken) {
-  //     fetchBotSlackChannels(
-  //       nodeConnection.slackNode.slackAccessToken,
-  //       setSlackChannels
-  //     );
-  //   }
-  // }, [nodeConnection]);
+  useEffect(() => {
+    if (nodeConnection.slackNode.slackAccessToken) {
+      fetchBotSlackChannels(
+        nodeConnection.slackNode.slackAccessToken,
+        setSlackChannels
+      );
+    }
+  }, [nodeConnection]);
 
   return (
     <aside>
