@@ -134,3 +134,5 @@ export const onCreateNodeTemplate = async (
     if (response) return "Notion template saved";
   }
 };
+
+export const onGetWorkflow = async () => {};
