@@ -2,7 +2,7 @@
 
 import { db } from "@/lib/db";
 import { Option } from "@/store";
-import { auth } from "@clerk/nextjs";
+import { auth, currentUser } from "@clerk/nextjs";
 
 export const getGoogleListener = async () => {
   const { userId } = auth();
@@ -135,4 +135,17 @@ export const onCreateNodeTemplate = async (
   }
 };
 
-export const onGetWorkflow = async () => {};
+export const onGetWorkflow = async () => {
+  const user = await currentUser();
+  if (user) {
+    const workflow = await db.workflows.findMany({
+      where: {
+        userId: user.id,
+      },
+    });
+
+    if (workflow) return workflow;
+  }
+};
+
+export const onCreateWorkflow = async (name: string, description: string) => {};

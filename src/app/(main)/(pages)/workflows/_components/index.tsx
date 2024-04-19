@@ -10,12 +10,13 @@ const Workflows = async (props: Props) => {
   return (
     <div className="relative flex flex-col gap-4">
       <section className="flex flex-col gap-4 m-2">
-        <Workflow
-          description="Creating a test workflow"
-          id="2452454"
-          name="automation workflow"
-          publish={false}
-        />
+        {workflows?.length ? (
+          workflows.map((flow) => <Workflow key={flow.id} {...flow} />)
+        ) : (
+          <div className="flex items-center justify-center h-full mt-28">
+            No workflows
+          </div>
+        )}
       </section>
     </div>
   );

@@ -15,6 +15,8 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
+import { onCreateWorkflow } from "@/app/(main)/(pages)/workflows/_actions/workflow-connections";
 
 type Props = {
   title?: string;
@@ -34,7 +36,14 @@ const WorkflowForm = ({ title, subTitle }: Props) => {
   const isLoading = form.formState.isLoading;
   const router = useRouter();
 
-  const handleSubmit = () => {};
+  const handleSubmit = async (values: z.infer<typeof WorkflowFormSchema>) => {
+    const workflow = await onCreateWorkflow(values.name, values.description);
+
+    if (workflow) {
+      toast.message(workflow.message);
+      router.refresh();
+    }
+  };
 
   return (
     <Card className="w-full max-w-[650px] border-none">
